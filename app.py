@@ -37,5 +37,36 @@ def create():
     db.session.commit()
     return redirect("/")
 
+@app.route("/edit/<int:id>")
+def edit(id):
+    #1. 수정하려고 하는 레코드를 선택해서
+    post = Post.query.get(id)
+    #2. 수정을 하고
+    #post.title = "수정하셈"
+    #3. 커밋한다.
+    #post.content = "수정하셈"
+    return render_template("edit.html", post=post)
+    
+@app.route("/update/<int:id>")
+def update(id):
+    #1. 수정하려고 하는 레코드를 선택해서
+    post = Post.query.get(id)
+    #2. 수정을 하고
+    post.title = request.args.get('title')
+    #3. 커밋한다.
+    post.content = request.args.get('content')
+    #return render_template("edit.html", post=post)
+    
+    db.session.commit()
+    return redirect("/")
 
+@app.route("/delete/<int:id>")
+def delete(id):  
+    #1. 지우려하고 하는 레코드를 선택
+    post = Post.query.get(id)
+    #2. 지우기
+    db.session.delete(post)
+    #3. 확정하고 db에 반영
+    db.session.commit()
+    return redirect("/")
 app.run(host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)), debug = True)

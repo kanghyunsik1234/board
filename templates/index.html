@@ -13,8 +13,12 @@
         내용:<input type = "text" name = "content"><br>
         <input type = "submit">
         {% for p in posts %}
+            
             <p>제목 : {{ p.title }}</p>
             <p>내용 : {{ p.content }}</p>
+            <a href="/edit/{{ p.id }}">[수정]</a>
+            <a href="/delete/{{ p.id }}">[삭제]</a>
+        
         {% endfor %}
     </form>
 </body>
